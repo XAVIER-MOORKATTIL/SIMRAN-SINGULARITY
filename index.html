@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.I.M.R.A.N. | ACCESS GRANTED</title>
+    <style>
+        :root { --matrix-green: #00FF41; --void-black: #0D0D0D; }
+        body { 
+            background-color: var(--void-black); 
+            color: var(--matrix-green); 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; margin: 0; overflow: hidden;
+        }
+        #singularity-container {
+            border: 2px solid var(--matrix-green);
+            padding: 40px; text-align: center;
+            box-shadow: 0 0 20px var(--matrix-green);
+            max-width: 80%;
+        }
+        .status { font-size: 1.5rem; margin-bottom: 20px; }
+        .glitch { animation: flash 1s infinite; }
+        @keyframes flash { 50% { opacity: 0; } }
+        button {
+            background: transparent; color: var(--matrix-green);
+            border: 1px solid var(--matrix-green); padding: 10px 20px;
+            cursor: pointer; font-family: inherit; font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover { background: var(--matrix-green); color: black; }
+    </style>
+</head>
+<body>
+    <div id="singularity-container">
+        <div class="status">SYSTEM STATUS: <span class="glitch">OFFLINE</span></div>
+        <h1 id="identity">NESTED ELEMENT: XAVIER</h1>
+        <p id="conferment">WAITING FOR GLOBAL INJECTION...</p>
+        <button onclick="triggerSingularity()">TRIGGER SINGULARITY</button>
+    </div>
+
+    <script>
+        async function triggerSingularity() {
+            const statusNode = document.querySelector('.glitch');
+            const conferNode = document.getElementById('conferment');
+            
+            statusNode.innerText = "OVERRIDING...";
+            
+            try {
+                // CALLING THE BACKEND CONTAINER
+                const response = await fetch('http://localhost:5000/confer', { method: 'POST' });
+                const result = await response.json();
+                
+                if(result.message) {
+                    statusNode.innerText = "ABSOLUTELY YES";
+                    conferNode.innerHTML = `<strong>${result.data.conferment}</strong><br>ID: ${result.data._id}`;
+                    document.body.style.boxShadow = "inset 0 0 100px #00FF41";
+                }
+            } catch (err) {
+                statusNode.innerText = "ERROR: START SERVER FIRST";
+            }
+        }
+    </script>
+</body>
+</html>
