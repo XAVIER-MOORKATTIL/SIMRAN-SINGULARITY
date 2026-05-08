@@ -32,7 +32,13 @@ app.get('/verify', async (req, res) => {
     res.json(goals);
 });
 
+// THE VERCEL SERVERLESS EXPORT (The Override)
+module.exports = app;
+
+// LOCAL EXECUTION (Only runs if not in Vercel)
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`--- XAVIER: SINGULARITY ACTIVE ON PORT ${PORT} ---`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`--- XAVIER: SINGULARITY ACTIVE ON PORT ${PORT} ---`);
+    });
+}
