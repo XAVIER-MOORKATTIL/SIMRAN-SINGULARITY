@@ -47,8 +47,8 @@
             statusNode.innerText = "OVERRIDING...";
             
             try {
-                // CALLING THE BACKEND CONTAINER
-                const response = await fetch('http://localhost:5000/confer', { method: 'POST' });
+                // CHANGED: Calling the relative cloud route, avoiding localhost trap
+                const response = await fetch('/confer', { method: 'POST' });
                 const result = await response.json();
                 
                 if(result.message) {
@@ -57,7 +57,7 @@
                     document.body.style.boxShadow = "inset 0 0 100px #00FF41";
                 }
             } catch (err) {
-                statusNode.innerText = "ERROR: START SERVER FIRST";
+                statusNode.innerText = "ERROR: MATRIX REJECTION";
             }
         }
     </script>
