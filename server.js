@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 const Goal = require('./models/Goal');
 
@@ -28,12 +29,18 @@ app.get('/verify', async (req, res) => {
     res.json(goals);
 });
 
-// THE DUAL-CROWN LOGIC
-// This allows the app to be used by Vercel's serverless engine
+// THE ABSOLUTE SINGULARITY: Backend Absorbs the Frontend
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// VERCEL SERVERLESS EXPORT
 module.exports = app;
 
-// This forces Render to find an open port
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`--- XAVIER: SINGULARITY ACTIVE ON PORT ${PORT} ---`);
-});
+// RENDER / LOCAL EXECUTION (Bypasses Vercel's freeze)
+if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`--- XAVIER: SINGULARITY ACTIVE ON PORT ${PORT} ---`);
+    });
+}
